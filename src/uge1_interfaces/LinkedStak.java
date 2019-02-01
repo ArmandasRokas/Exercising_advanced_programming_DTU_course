@@ -18,45 +18,58 @@ public class LinkedStak implements Stak {
 
     private Element first;
     private Element actual;
+    private int length;
+    public static final int MAX_VALUE = 100000;
 
     @Override
     public void push(String e) {
 
-
+        if(isFull()){
+            System.out.println("The stak is full");
+            throw new UnsupportedOperationException("The stak is full");
+        }
         if(first == null){
             first = new Element(e);
         } else{
             Element temp = first;
             first = new Element(e, temp);
         }
+        length++;
     }
 
     @Override
     public String pop() {
-        return null;
+
+        if(first == null){
+            System.out.println("The \"stak\" is empty");
+            throw new UnsupportedOperationException("The \"stak\" is empty");
+        }
+        Element temp = first;
+        first = first.next;
+        length--;
+
+        return temp.s;
     }
 
     @Override
     public boolean isEmpty() {
-        return false;
+        return first==null;
     }
 
     @Override
     public boolean isFull() {
-        return false;
+        return length>=MAX_VALUE;
     }
 
     @Override
     public String[] show() {
-        int countLength = 0;
 
         String s = "";
 
         if(first != null){
             s += first.s;
-            countLength++;
         } else{
-            System.out.println("The string is empty");
+            System.out.println("The \"stak\" is empty");
             throw new UnsupportedOperationException("The \"stak\" is empty");
         }
 
@@ -65,11 +78,10 @@ public class LinkedStak implements Stak {
         while(actual.next != null){
             actual = actual.next;
             s += actual.s;
-            countLength++;
         }
 
         System.out.println(s); // can be deleted. Only for exercising purposes.
-        return getArray(countLength);
+        return getArray(length);
 
     }
 
@@ -77,7 +89,7 @@ public class LinkedStak implements Stak {
         String[] array = new String[countLength];
         array[0] = first.s;
         actual = first;
-        for(int i=1; i<array.length; i++){
+        for(int i=1; i<array.length; i++){  // no need for out of bounds check, because it assumes, that countLength is correct
             actual = actual.next;
             array[i] = actual.s;
         }

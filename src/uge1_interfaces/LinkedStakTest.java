@@ -29,15 +29,48 @@ class LinkedStakTest {
     }
 
     @Test
-    void pop() {
+    void pop_not_empty() {
+        stak.push("a");
+        stak.push("b");
+        stak.push("c");
+        stak.pop();
+        assertArrayEquals(new String[]{"b","a"}, stak.show());
+    }
+
+
+    @Test
+    void pop_empty(){
+        assertThrows(UnsupportedOperationException.class,
+                ()->{
+                    stak.pop();
+                });
     }
 
     @Test
+    void pop_empty_after_pushing(){
+        stak.push("a");
+        stak.pop();
+        assertThrows(UnsupportedOperationException.class,
+                ()->{
+                    stak.pop();
+                });
+    }
+
+
+    @Test
     void isEmpty() {
+        assertTrue(stak.isEmpty());
     }
 
     @Test
     void isFull() {
+        for (int i = 0; i<100000; i++){
+            stak.push("a");
+        }
+        assertThrows(UnsupportedOperationException.class,
+                ()->{
+                    stak.push("a");
+                });
     }
 
     @Test

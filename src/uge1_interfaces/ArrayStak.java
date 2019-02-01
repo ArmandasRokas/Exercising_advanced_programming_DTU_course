@@ -4,7 +4,7 @@ public class ArrayStak implements Stak {
 
     private String[] stak;
     private int numOfElements;
-    private static final int MAX_VALUE = 100;
+    private static final int MAX_VALUE = 100000;
 
 
     public ArrayStak(){
@@ -49,7 +49,7 @@ public class ArrayStak implements Stak {
 
     @Override
     public boolean isFull() {
-        return numOfElements>=100;
+        return numOfElements>=MAX_VALUE;
     }
 
     @Override
